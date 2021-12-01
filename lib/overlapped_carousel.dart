@@ -4,7 +4,7 @@ import 'Card.dart';
 
 class OverlappedCarousel extends StatefulWidget {
   final List<Widget> widgets;
-  final Function onClicked;
+  final Function(int) onClicked;
 
   OverlappedCarousel({
     required this.widgets,
@@ -16,50 +16,42 @@ class OverlappedCarousel extends StatefulWidget {
 }
 
 class _OverlappedCarouselState extends State<OverlappedCarousel> {
-  late PageController _pageController;
   double currentIndex = 2;
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: currentIndex.toInt());
-    _pageController.addListener(
-      () {
-        setState(() {
-          currentIndex = _pageController.page ?? 0;
-        });
-      },
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20.0),
+      padding: const EdgeInsets.symmetric(vertical: 40.0),
       child: LayoutBuilder(
         builder: (context, constraints) {
-          return Stack(
-            children: <Widget>[
-              OverlappedCarouselCardItems(
-                cards: List.generate(
-                  widget.widgets.length,
-                  (index) => CardModel(id: index, child: widget.widgets[index]),
-                ),
-                centerIndex: currentIndex,
-                maxWidth: constraints.maxWidth,
-                maxHeight: constraints.maxHeight,
-                onClicked: widget.onClicked,
+          return GestureDetector(
+            onPanUpdate: (details) {
+              setState(() {
+                var indx = currentIndex - details.delta.dx * 0.017;
+                if (indx >= 1 && indx <= widget.widgets.length - 3)
+                  currentIndex = indx;
+              });
+            },
+            onPanEnd: (details) {
+              setState(() {
+                currentIndex = currentIndex.ceil().toDouble();
+              });
+            },
+            child: OverlappedCarouselCardItems(
+              cards: List.generate(
+                widget.widgets.length,
+                (index) => CardModel(id: index, child: widget.widgets[index]),
               ),
-              Positioned.fill(
-                child: PageView.builder(
-                  itemCount: widget.widgets.length,
-                  controller: _pageController,
-                  itemBuilder: (context, index) {
-                    return Container();
-                  },
-                ),
-              ),
-            ],
+              centerIndex: currentIndex,
+              maxWidth: constraints.maxWidth,
+              maxHeight: constraints.maxHeight,
+              onClicked: widget.onClicked,
+            ),
           );
         },
       ),
@@ -69,24 +61,23 @@ class _OverlappedCarouselState extends State<OverlappedCarousel> {
 
 class OverlappedCarouselCardItems extends StatelessWidget {
   final List<CardModel> cards;
-  final Function? onClicked;
+  final Function(int) onClicked;
   final double centerIndex;
   final double maxHeight;
   final double maxWidth;
 
   OverlappedCarouselCardItems({
     required this.cards,
-    // @required this.titles,
     required this.centerIndex,
     required this.maxHeight,
     required this.maxWidth,
-    this.onClicked,
+    required this.onClicked,
   });
 
   double getCardPosition(int index) {
     final double center = maxWidth / 2;
     final double centerWidgetWidth = maxWidth / 4;
-    final double basePosition = center - centerWidgetWidth / 2;
+    final double basePosition = center - centerWidgetWidth / 2 - 15.0;
     final distance = centerIndex - index;
 
     final double nearWidgetWidth = centerWidgetWidth / 5 * 4;
@@ -141,10 +132,12 @@ class OverlappedCarouselCardItems extends StatelessWidget {
   Matrix4 getTransform(int index) {
     final distance = centerIndex - index;
 
-    return Matrix4.identity()
+    var transform = Matrix4.identity()
       ..setEntry(3, 2, 0.007)
-      ..rotateY(-0.2 * distance)
-      ..scale(1.1);
+      ..rotateY(-0.25 * distance)
+      ..scale(1.25, 1.25, 1.25);
+    if (index == centerIndex) transform..scale(1.05, 1.05, 1.05);
+    return transform;
   }
 
   Widget _buildItem(CardModel item) {
@@ -152,7 +145,7 @@ class OverlappedCarouselCardItems extends StatelessWidget {
     final width = getCardWidth(index);
     final height = maxHeight - 20 * (centerIndex - index).abs();
     final position = getCardPosition(index);
-    final verticalPadding = 10 * (centerIndex - index).abs();
+    final verticalPadding = width * 0.05 * (centerIndex - index).abs();
 
     return Positioned(
       left: position,
@@ -162,13 +155,15 @@ class OverlappedCarouselCardItems extends StatelessWidget {
         child: Container(
           child: Stack(
             children: <Widget>[
-              Container(
-                width: width.toDouble(),
-                padding: EdgeInsets.symmetric(vertical: verticalPadding),
-                height: height > 0 ? height : 0,
-                child: item.child,
+              InkWell(
+                onTap: () => onClicked(index),
+                child: Container(
+                  width: width.toDouble(),
+                  padding: EdgeInsets.symmetric(vertical: verticalPadding),
+                  height: height > 0 ? height : 0,
+                  child: item.child,
+                ),
               ),
-              // if (titles != null && !displayOnlyCenterTitle) _buildTitle(index),
             ],
           ),
         ),
