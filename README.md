@@ -1,4 +1,4 @@
-# Coverflow
+# Overlapped Carousel
 
 A horizontal overlapped carousel widget. The center widget will be at the top of the stack.
 <br><br>

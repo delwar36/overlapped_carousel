@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'Card.dart';
+import 'card.dart';
 
 class OverlappedCarousel extends StatefulWidget {
   final List<Widget> widgets;
