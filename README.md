@@ -4,7 +4,7 @@ A horizontal overlapped carousel widget. The center widget will be at the top of
 <br><br>
 
 # Demo
-![screenrecord](https://user-images.githubusercontent.com/42492040/144290050-b45603df-42c9-48e0-b29e-5b68205ffc63.gif =300x420)
+<img src="https://user-images.githubusercontent.com/42492040/144290050-b45603df-42c9-48e0-b29e-5b68205ffc63.gif" width="250" height="420"/>
 
 
 # Installation
