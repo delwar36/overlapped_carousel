@@ -20,19 +20,26 @@ import 'package:overlapped_carousel/overlapped_carousel.dart';
 Simply add a `OverlappedCarousel` widget with required params.
 
 ```  
-  @override
+ @override
   Widget build(BuildContext context) {
-    var maxWidth = MediaQuery.of(context).size.width;
+    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.blue,
       //Wrap with Center to place the carousel center of the screen
       body: Center(
         //Wrap the OverlappedCarousel widget with SizedBox to fix a height. No need to specify width.
         child: SizedBox(
-          height: maxWidth / 3.6 * (16 / 9),
+          height: min(screenWidth / 3.3 * (16 / 9),screenHeight*.9),
           child: OverlappedCarousel(
             widgets: widgets, //List of widgets
-            onClicked: () {},
+            onClicked: (index) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("You clicked at $index"),
+                ),
+              );
+            },
           ),
         ),
       ),
