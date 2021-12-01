@@ -3,6 +3,10 @@
 A horizontal overlapped carousel widget. The center widget will be at the top of the stack.
 <br><br>
 
+# Demo
+![screenrecord](https://user-images.githubusercontent.com/42492040/144290050-b45603df-42c9-48e0-b29e-5b68205ffc63.gif)
+
+
 # Installation
 
 Add `overlapped_carousel: ^1.0.0` to your `pubspec.yaml` dependecies. And import it:
