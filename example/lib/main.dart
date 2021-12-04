@@ -59,6 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
           height: min(screenWidth / 3.3 * (16 / 9),screenHeight*.9),
           child: OverlappedCarousel(
             widgets: widgets, //List of widgets
+            currentIndex: 2,
             onClicked: (index) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(

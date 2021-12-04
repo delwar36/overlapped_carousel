@@ -5,11 +5,10 @@ import 'card.dart';
 class OverlappedCarousel extends StatefulWidget {
   final List<Widget> widgets;
   final Function(int) onClicked;
+  final int? currentIndex;
 
-  OverlappedCarousel({
-    required this.widgets,
-    required this.onClicked,
-  });
+  OverlappedCarousel(
+      {required this.widgets, required this.onClicked, this.currentIndex});
 
   @override
   _OverlappedCarouselState createState() => _OverlappedCarouselState();
@@ -20,6 +19,8 @@ class _OverlappedCarouselState extends State<OverlappedCarousel> {
 
   @override
   void initState() {
+    if (widget.currentIndex != null)
+      currentIndex = widget.currentIndex!.toDouble();
     super.initState();
   }
 
@@ -32,7 +33,7 @@ class _OverlappedCarouselState extends State<OverlappedCarousel> {
           return GestureDetector(
             onPanUpdate: (details) {
               setState(() {
-                var indx = currentIndex - details.delta.dx * 0.017;
+                var indx = currentIndex - details.delta.dx * 0.02;
                 if (indx >= 1 && indx <= widget.widgets.length - 3)
                   currentIndex = indx;
               });
@@ -77,7 +78,7 @@ class OverlappedCarouselCardItems extends StatelessWidget {
   double getCardPosition(int index) {
     final double center = maxWidth / 2;
     final double centerWidgetWidth = maxWidth / 4;
-    final double basePosition = center - centerWidgetWidth / 2 - 15.0;
+    final double basePosition = center - centerWidgetWidth / 2 - 12;
     final distance = centerIndex - index;
 
     final double nearWidgetWidth = centerWidgetWidth / 5 * 4;
@@ -153,19 +154,10 @@ class OverlappedCarouselCardItems extends StatelessWidget {
         transform: getTransform(index),
         alignment: FractionalOffset.center,
         child: Container(
-          child: Stack(
-            children: <Widget>[
-              InkWell(
-                onTap: () => onClicked(index),
-                child: Container(
-                  width: width.toDouble(),
-                  padding: EdgeInsets.symmetric(vertical: verticalPadding),
-                  height: height > 0 ? height : 0,
-                  child: item.child,
-                ),
-              ),
-            ],
-          ),
+          width: width.toDouble(),
+          padding: EdgeInsets.symmetric(vertical: verticalPadding),
+          height: height > 0 ? height : 0,
+          child: item.child,
         ),
       ),
     );
@@ -183,7 +175,13 @@ class OverlappedCarouselCardItems extends StatelessWidget {
       }
     }
     widgets.sort((a, b) => a.zIndex.compareTo(b.zIndex));
-    return widgets.map((e) => _buildItem(e)).toList();
+    return widgets.map((e) {
+      double distance = (centerIndex - e.id).abs();
+      if (distance >= 0 && distance <= 3)
+        return _buildItem(e);
+      else
+        return Container();
+    }).toList();
   }
 
   @override

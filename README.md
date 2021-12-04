@@ -4,12 +4,12 @@ A horizontal overlapped carousel widget. The center widget will be at the top of
 <br><br>
 
 # Demo
-<img src="https://user-images.githubusercontent.com/42492040/144290050-b45603df-42c9-48e0-b29e-5b68205ffc63.gif" width="250" height="420"/>
+<img src="https://user-images.githubusercontent.com/42492040/144290050-b45603df-42c9-48e0-b29e-5b68205ffc63.gif" width="250" height="460"/>
 
 
 # Installation
 
-Add `overlapped_carousel: ^1.0.0` to your `pubspec.yaml` dependecies. And import it:
+Add `overlapped_carousel: ^1.0.1` to your `pubspec.yaml` dependecies. And import it:
 
 ```
 import 'package:overlapped_carousel/overlapped_carousel.dart';
@@ -20,7 +20,7 @@ import 'package:overlapped_carousel/overlapped_carousel.dart';
 Simply add a `OverlappedCarousel` widget with required params.
 
 ```  
- @override
+  @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
@@ -33,6 +33,7 @@ Simply add a `OverlappedCarousel` widget with required params.
           height: min(screenWidth / 3.3 * (16 / 9),screenHeight*.9),
           child: OverlappedCarousel(
             widgets: widgets, //List of widgets
+            currentIndex: 2,
             onClicked: (index) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(

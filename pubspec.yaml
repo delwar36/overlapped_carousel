@@ -1,6 +1,6 @@
 name: overlapped_carousel
 description: A Flutter package project that is a simple horizontal overlapped_carousel widget.
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/delwar36/overlapped_carousel
 
 environment:
