@@ -1,3 +1,5 @@
+library overlapped_carousel;
+
 import 'package:flutter/material.dart';
 
 import 'card.dart';
