@@ -1,4 +1,4 @@
-<b>APOLOGY!!! Due to some busy schedules I am not being to update and rosolve the issues.
+<b>APOLOGY!!! Due to some busy schedules I am not being able to update and rosolve the issues.
 I appreciate if anyone contributes to resolve the issues. Waiting for the PRs.</b>
 
 # Overlapped Carousel
