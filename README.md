@@ -1,3 +1,6 @@
+<b>APOLOGY!!! Due to some busy schedules I am not being to update and rosolve the issues.
+I appreciate if anyone contributes to resolve the issues. Waiting for the PRs.</b>
+
 # Overlapped Carousel
 
 A horizontal overlapped carousel widget. The center widget will be at the top of the stack.
