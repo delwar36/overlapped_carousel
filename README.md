@@ -8,6 +8,7 @@ A horizontal overlapped carousel widget. The center widget will be at the top of
 # Demo
 
 <img src="https://user-images.githubusercontent.com/42492040/144290050-b45603df-42c9-48e0-b29e-5b68205ffc63.gif" width="250" height="460" alt="demo 1"/>
+<img src="https://github.com/yashas-hm/overlapped_carousel/assets/64674824/7146b81c-decc-42d1-a702-93bd8f12d492.gif" width="250" height="460" alt="demo 2"/>
 
 # Installation
 
