@@ -4,25 +4,26 @@ I appreciate if anyone contributes to resolve the issues. Waiting for the PRs.</
 # Overlapped Carousel
 
 A horizontal overlapped carousel widget. The center widget will be at the top of the stack.
-<br><br>
 
 # Demo
-<img src="https://user-images.githubusercontent.com/42492040/144290050-b45603df-42c9-48e0-b29e-5b68205ffc63.gif" width="250" height="460"/>
 
+<img src="https://user-images.githubusercontent.com/42492040/144290050-b45603df-42c9-48e0-b29e-5b68205ffc63.gif" width="250" height="460" alt="demo 1"/>
 
 # Installation
 
-Add `overlapped_carousel: ^1.0.1` to your `pubspec.yaml` dependecies. And import it:
+Add `overlapped_carousel: ^1.1.0` to your `pubspec.yaml` dependencies. And import it:
 
 ```
 import 'package:overlapped_carousel/overlapped_carousel.dart';
 ```
+
 <br>
 
 # How to use
+
 Simply add a `OverlappedCarousel` widget with required params.
 
-```  
+``` dart 
   @override
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
@@ -44,11 +45,11 @@ Simply add a `OverlappedCarousel` widget with required params.
                 ),
               );
             },
+            // To obscure or blur cards not in focus use the obscure parameter.
+            obscure: 0.4,
           ),
         ),
       ),
     );
   }
 ```
-<br>
-
