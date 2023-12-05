@@ -9,8 +9,11 @@ class OverlappedCarousel extends StatefulWidget {
   final Function(int) onClicked;
   final int? currentIndex;
 
-  OverlappedCarousel(
-      {required this.widgets, required this.onClicked, this.currentIndex});
+  OverlappedCarousel({
+    required this.widgets,
+    required this.onClicked,
+    this.currentIndex,
+  });
 
   @override
   _OverlappedCarouselState createState() => _OverlappedCarouselState();
@@ -48,7 +51,10 @@ class _OverlappedCarouselState extends State<OverlappedCarousel> {
             child: OverlappedCarouselCardItems(
               cards: List.generate(
                 widget.widgets.length,
-                (index) => CardModel(id: index, child: widget.widgets[index]),
+                (index) => CardModel(
+                  id: index,
+                  child: widget.widgets[index],
+                ),
               ),
               centerIndex: currentIndex,
               maxWidth: constraints.maxWidth,
