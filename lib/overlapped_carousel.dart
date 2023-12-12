@@ -1,5 +1,7 @@
 library overlapped_carousel;
 
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import 'card.dart';
@@ -8,9 +10,14 @@ class OverlappedCarousel extends StatefulWidget {
   final List<Widget> widgets;
   final Function(int) onClicked;
   final int? currentIndex;
+  final double obscure;
 
-  OverlappedCarousel(
-      {required this.widgets, required this.onClicked, this.currentIndex});
+  OverlappedCarousel({
+    required this.widgets,
+    required this.onClicked,
+    this.currentIndex,
+    this.obscure = 0,
+  });
 
   @override
   _OverlappedCarouselState createState() => _OverlappedCarouselState();
@@ -48,12 +55,16 @@ class _OverlappedCarouselState extends State<OverlappedCarousel> {
             child: OverlappedCarouselCardItems(
               cards: List.generate(
                 widget.widgets.length,
-                (index) => CardModel(id: index, child: widget.widgets[index]),
+                (index) => CardModel(
+                  id: index,
+                  child: widget.widgets[index],
+                ),
               ),
               centerIndex: currentIndex,
               maxWidth: constraints.maxWidth,
               maxHeight: constraints.maxHeight,
               onClicked: widget.onClicked,
+              obscure: widget.obscure,
             ),
           );
         },
@@ -68,6 +79,7 @@ class OverlappedCarouselCardItems extends StatelessWidget {
   final double centerIndex;
   final double maxHeight;
   final double maxWidth;
+  final double obscure;
 
   OverlappedCarouselCardItems({
     required this.cards,
@@ -75,6 +87,7 @@ class OverlappedCarouselCardItems extends StatelessWidget {
     required this.maxHeight,
     required this.maxWidth,
     required this.onClicked,
+    required this.obscure,
   });
 
   double getCardPosition(int index) {
@@ -155,14 +168,34 @@ class OverlappedCarouselCardItems extends StatelessWidget {
       child: Transform(
         transform: getTransform(index),
         alignment: FractionalOffset.center,
-        child: Container(
-          width: width.toDouble(),
-          padding: EdgeInsets.symmetric(vertical: verticalPadding),
-          height: height > 0 ? height : 0,
-          child: item.child,
+        child: Stack(
+          children: [
+            Container(
+              width: width.toDouble(),
+              padding: EdgeInsets.symmetric(vertical: verticalPadding),
+              height: height > 0 ? height : 0,
+              child: item.child,
+            ),
+              Container(
+                width: width.toDouble(),
+                padding: EdgeInsets.symmetric(vertical: verticalPadding),
+                height: height > 0 ? height : 0,
+                child: ClipRRect(
+                  child: BackdropFilter(
+                    filter: getFilter(obscure, index),
+                    child: Container(),
+                  ),
+                ),
+              ),
+          ],
         ),
       ),
     );
+  }
+
+  ImageFilter getFilter(double obscure, int index){
+    final distance = (centerIndex - index).abs();
+    return ImageFilter.blur(sigmaX: 5.0*obscure*distance, sigmaY: 5.0*obscure*distance);
   }
 
   List<Widget> _sortedStackWidgets(List<CardModel> widgets) {
