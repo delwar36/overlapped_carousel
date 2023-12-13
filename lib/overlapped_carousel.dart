@@ -155,7 +155,7 @@ class OverlappedCarouselCardItems extends StatelessWidget {
 
     var transform = Matrix4.identity()
       ..setEntry(3, 2, 0.007)
-      ..rotateY(-skewAngle * distance)
+      ..rotateY(skewAngle * distance)
       ..scale(1.25, 1.25, 1.25);
     if (index == centerIndex) transform..scale(1.05, 1.05, 1.05);
     return transform;
