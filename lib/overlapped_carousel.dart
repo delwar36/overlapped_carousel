@@ -11,12 +11,14 @@ class OverlappedCarousel extends StatefulWidget {
   final Function(int) onClicked;
   final int? currentIndex;
   final double obscure;
+  final double skewAngle;
 
   OverlappedCarousel({
     required this.widgets,
     required this.onClicked,
     this.currentIndex,
     this.obscure = 0,
+    this.skewAngle = 0.25
   });
 
   @override
@@ -65,6 +67,7 @@ class _OverlappedCarouselState extends State<OverlappedCarousel> {
               maxHeight: constraints.maxHeight,
               onClicked: widget.onClicked,
               obscure: widget.obscure,
+              skewAngle: widget.skewAngle,
             ),
           );
         },
@@ -80,6 +83,7 @@ class OverlappedCarouselCardItems extends StatelessWidget {
   final double maxHeight;
   final double maxWidth;
   final double obscure;
+  final double skewAngle;
 
   OverlappedCarouselCardItems({
     required this.cards,
@@ -88,6 +92,7 @@ class OverlappedCarouselCardItems extends StatelessWidget {
     required this.maxWidth,
     required this.onClicked,
     required this.obscure,
+    required this.skewAngle,
   });
 
   double getCardPosition(int index) {
@@ -150,7 +155,7 @@ class OverlappedCarouselCardItems extends StatelessWidget {
 
     var transform = Matrix4.identity()
       ..setEntry(3, 2, 0.007)
-      ..rotateY(-0.25 * distance)
+      ..rotateY(-skewAngle * distance)
       ..scale(1.25, 1.25, 1.25);
     if (index == centerIndex) transform..scale(1.05, 1.05, 1.05);
     return transform;
