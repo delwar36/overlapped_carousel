@@ -49,6 +49,8 @@ Simply add a `OverlappedCarousel` widget with required params.
             },
             // To obscure or blur cards not in focus use the obscure parameter.
             obscure: 0.4,
+            // To control skew angle
+            skewAngle: 0.25,
           ),
         ),
       ),
