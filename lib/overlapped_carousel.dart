@@ -18,7 +18,7 @@ class OverlappedCarousel extends StatefulWidget {
     required this.onClicked,
     this.currentIndex,
     this.obscure = 0,
-    this.skewAngle = 0.25
+    this.skewAngle = -0.25
   });
 
   @override
