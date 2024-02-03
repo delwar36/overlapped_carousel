@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         //Wrap the OverlappedCarousel widget with SizedBox to fix a height. No need to specify width.
         child: SizedBox(
-          height: min(screenWidth / 3.3 * (16 / 9),screenHeight*.9),
+          height: min(screenWidth / 3.3 * (16 / 9), screenHeight * .9),
           child: OverlappedCarousel(
             widgets: widgets, //List of widgets
             currentIndex: 2,
